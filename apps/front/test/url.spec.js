@@ -9,7 +9,7 @@ describe('Проверка корректности урла', function() {
   this.timeout(3000); // Таймайт для стабильности тестов
 
   before(async () => {
-    browser = await puppeteer.launch({ headless: false }); // Запуск браузера
+    browser = await puppeteer.launch({ headless: true }); // Запуск браузера
     page = await browser.newPage();  // Открытие новой страницы
   });
 
