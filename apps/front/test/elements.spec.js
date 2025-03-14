@@ -2,12 +2,12 @@ import puppeteer from "puppeteer";
 import { expect } from "chai";
 import { MainPage } from "../page/mainPage.js";
 
-describe("Проверка элементов", function () {
+describe("Проверка элементов страницы", function () {
   let browser;
   let page;
   let mainPage;
 
-  this.timeout(5000);
+  this.timeout(6000);
 
   this.beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
@@ -19,7 +19,7 @@ describe("Проверка элементов", function () {
   this.afterEach(async () => {
     await browser.close();
   });
-  it("Элементы страницы(основные) без поиска юзера -> отображается хедер, блок, поле поиска и кнопка поиска ", async () => {
+  it("Наличие элементов -> отображается хедер, блок, поле поиска и кнопка поиска ", async () => {
     expect(await mainPage.getElement(mainPage.headerBlock)).to.be.true;
     expect(await mainPage.getElement(mainPage.searchBlock)).to.be.true;
     expect(await mainPage.getElement(mainPage.searchField)).to.be.true;
@@ -28,4 +28,25 @@ describe("Проверка элементов", function () {
     expect(await mainPage.getElement(mainPage.followers)).to.be.true;
     expect(await mainPage.getElement(mainPage.summuryBlock)).to.be.true;
   });
-});
+
+  it("Текст в хедере -> отображается текст 'Welcome'", async () => {
+    expect(await mainPage.getInnertext(mainPage.headerBlock)).to.match(
+      /Welcome/
+    );
+  });
+  it("Текст в кнопке поиска -> отображается текст 'Search'", async () => {
+    expect(await mainPage.getInnertext(mainPage.searchButton)).to.match(
+        /Search/
+      );
+   
+  });
+  it("Плейсхолдер поле поиска -> отображается текст 'enter github user name'", async () => {
+  const input = await page.$(`${mainPage.searchField}`);
+  const placeholderProperty = await input.getProperty('placeholder');
+  const placeholder = await placeholderProperty.jsonValue();
+  expect(placeholder).to.equal('enter github user name')
+   
+  });
+
+;});
+
