@@ -7,8 +7,9 @@ export class MainPage {
     this.searchButton = 'button[type="submit"]';
     this.userBlock = '[class="sc-dkrFOg bHWDWn"]';
     this.followers = '[class="followers"]'
-    this.summuryBlock = '[class="sc-bcXHqe cSGkzu section-center"]'
+    this.summaryBlock = '[class="sc-bcXHqe cSGkzu section-center"]'
     this.avatar = '[src="https://avatars.githubusercontent.com/u/97968096?v=4"]'
+    this.itemSummary = '[class="item"]'
     
   }
   async getElement(element) {
@@ -22,5 +23,9 @@ export class MainPage {
 
   async getInnertext(element){
     return await this.page.$eval(element, el => el.innerText);
+  }
+  async getSummaryItemText(nth){
+   let items = await this.page.$$(this.itemSummary);
+   return await this.page.evaluate(el => el.innerText, items[nth]);
   }
 }
