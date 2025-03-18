@@ -1,15 +1,14 @@
 {
   "dependencies": {
     "puppeteer": "^24.2.1"
-
   },
   "devDependencies": {
     "chai": "^5.2.0",
     "mocha": "^11.1.0"
-
   },
   "scripts": {
-  "test": "mocha apps/front/test/*.spec.js"
-},
-     "type": "module"
+    "test_front": "mocha apps/front/test/*.spec.js",
+    "test_back": "mocha apps/back/test/*.spec.js"
+  },
+  "type": "module"
 }
