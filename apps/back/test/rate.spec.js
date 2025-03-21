@@ -17,7 +17,7 @@ describe("Получения информации по rate", function () {
   this.afterEach(async () => {
     await browser.close();
   });
-  it.only("Валидный запрос, статус и наличие полей -> статус 200, поля корректны", async () => {
+  it("Валидный запрос, статус и наличие полей -> статус 200, поля корректны", async () => {
     const fieldInObjects = ["limit", "remaining", "reset", "used", "resource"];
     let response = await baseAPI.sendRequest(
       "https://api.github.com/rate_limit"
@@ -42,5 +42,34 @@ describe("Получения информации по rate", function () {
     fieldInObjects.forEach((field) => {
       expect(response.body.rate).to.have.property(field);
     });
+  });
+  it("Валидный запрос, тип данных в значених -> строка и числа", async () => {
+    const fieldInObjectsNumberTypes = ["limit", "remaining", "reset", "used", ];
+    const fieldInObjectsStringTypes = ["resource"];
+    let response = await baseAPI.sendRequest(
+      "https://api.github.com/rate_limit"
+    );
+ 
+    fieldInObjectsNumberTypes.forEach((field) => {
+      expect(response.body.resources.core[field]).to.be.a('number')
+    });
+    fieldInObjectsNumberTypes.forEach((field) => {
+      expect(response.body.resources.graphql[field]).to.be.a('number')
+    });
+    fieldInObjectsNumberTypes.forEach((field) => {
+      expect(response.body.resources.integration_manifest[field]).to.be.a('number')
+    });
+    fieldInObjectsNumberTypes.forEach((field) => {
+      expect(response.body.resources.search[field]).to.be.a('number')
+    });
+    fieldInObjectsNumberTypes.forEach((field) => {
+      expect(response.body.rate[field]).to.be.a('number')
+    });
+    Object.values(response.body.resources).forEach(resource => {
+      fieldInObjectsStringTypes.forEach(field => {
+        expect(resource[field]).to.be.a('string');
+      });
+    });
+  
   });
 });
