@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test_front": "mocha apps/front/test/*.spec.js",
-    "test_back": "mocha apps/back/test/*.spec.js"
+    "test_back": "mocha apps/back/test/*.spec.js",
+    "test_all": "mocha apps/**/**/*.spec.js"
   },
   "type": "module"
 }
