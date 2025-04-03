@@ -1,6 +1,7 @@
 
 import puppeteer from 'puppeteer';
 import { expect } from 'chai';
+import { BASE_URL_FRONT } from '../../../common/url.js';
 
 
 describe('Проверка корректности урла', function() {
@@ -11,14 +12,14 @@ describe('Проверка корректности урла', function() {
   this.beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true }); 
     page = await browser.newPage();  
-    await page.goto('https://gh-users-search.netlify.app/'); 
+    await page.goto(BASE_URL_FRONT); 
   });
 
   this.afterEach(async () => {
     await browser.close();  
   });
   it('Перейти на страницу -> корректный урл', async () => {
-    expect(await page.url()).to.equal('https://gh-users-search.netlify.app/'); 
+    expect(await page.url()).to.equal(BASE_URL_FRONT); 
   });
   it('Перейти на страницу -> урл содержит подстроку', async () => {
     expect(await page.url()).to.contain('gh-users-search');

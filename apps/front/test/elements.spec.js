@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { expect } from "chai";
 import { MainPage } from "../page/mainPage.js";
+import { BASE_URL_FRONT } from "../../../common/url.js";
 
 describe("Проверка основыных элементов страницы", function () {
   let browser;
@@ -12,7 +13,7 @@ describe("Проверка основыных элементов страниц�
   this.beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
-    await page.goto("https://gh-users-search.netlify.app/");
+    await page.goto(BASE_URL_FRONT);
     mainPage = new MainPage(page);
   });
 
@@ -57,7 +58,7 @@ describe("Проверка элементов с найденным юзером
   this.beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
-    await page.goto("https://gh-users-search.netlify.app/");
+    await page.goto(BASE_URL_FRONT);
     mainPage = new MainPage(page);
     await mainPage.findUser("ShagaIZ");
     await page.waitForSelector('img[alt="Ilyas  Shagaleev"]', {
@@ -83,8 +84,6 @@ describe("Проверка элементов с найденным юзером
     );
   });
   it("Элемент 'Gists' -> отображается текст 'Gists' с кол-во 0", async () => {
-    expect(await mainPage.getSummaryItemText(3)).to.match(
-      /\b0\b\s*\bGists\b/
-    );
+    expect(await mainPage.getSummaryItemText(3)).to.match(/\b0\b\s*\bGists\b/);
   });
 });
