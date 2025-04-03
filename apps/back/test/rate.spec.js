@@ -2,6 +2,7 @@ import puppeteer from "puppeteer";
 import { expect } from "chai";
 import { BaseAPI } from "../helpers/baseAPI.js";
 import { rateResponse } from "../data/response.js";
+import { getUrlApi, PATH } from "../../../common/url.js";
 
 describe("Получения информации по rate", function () {
   let browser;
@@ -19,10 +20,7 @@ describe("Получения информации по rate", function () {
     await browser.close();
   });
   it("Статус и наличие полей -> статус 200, поля корректны", async () => {
-
-    let response = await baseAPI.sendRequest(
-      "https://api.github.com/rate_limit"
-    );
+    let response = await baseAPI.sendRequest(getUrlApi(PATH.RATE));
     expect(response.status).to.equal(200);
     expect(response.body).to.have.property("resources");
     expect(response.body.resources).to.have.property("graphql");
@@ -45,32 +43,29 @@ describe("Получения информации по rate", function () {
     });
   });
   it("Тип данных в значених -> строка и числа", async () => {
-    
- 
-    let response = await baseAPI.sendRequest(
-      "https://api.github.com/rate_limit"
-    );
- 
+    let response = await baseAPI.sendRequest(getUrlApi(PATH.RATE));
+
     rateResponse.numberFields.forEach((field) => {
-      expect(response.body.resources.core[field]).to.be.a('number')
+      expect(response.body.resources.core[field]).to.be.a("number");
     });
     rateResponse.numberFields.forEach((field) => {
-      expect(response.body.resources.graphql[field]).to.be.a('number')
+      expect(response.body.resources.graphql[field]).to.be.a("number");
     });
     rateResponse.numberFields.forEach((field) => {
-      expect(response.body.resources.integration_manifest[field]).to.be.a('number')
+      expect(response.body.resources.integration_manifest[field]).to.be.a(
+        "number"
+      );
     });
     rateResponse.numberFields.forEach((field) => {
-      expect(response.body.resources.search[field]).to.be.a('number')
+      expect(response.body.resources.search[field]).to.be.a("number");
     });
     rateResponse.numberFields.forEach((field) => {
-      expect(response.body.rate[field]).to.be.a('number')
+      expect(response.body.rate[field]).to.be.a("number");
     });
-    Object.values(response.body.resources).forEach(resource => {
-      rateResponse.stringFields.forEach(field => {
-        expect(resource[field]).to.be.a('string');
+    Object.values(response.body.resources).forEach((resource) => {
+      rateResponse.stringFields.forEach((field) => {
+        expect(resource[field]).to.be.a("string");
       });
     });
-  
   });
 });
