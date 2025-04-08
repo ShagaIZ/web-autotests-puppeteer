@@ -8,19 +8,21 @@ describe("Получения информации по rate", function () {
   let browser;
   let page;
   let baseAPI;
-  this.timeout(7000);
+  let response
+
 
   this.beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
     page = await browser.newPage();
     baseAPI = new BaseAPI(page);
+    response = await baseAPI.sendRequest(getUrlApi(PATH.RATE));
   });
 
   this.afterEach(async () => {
     await browser.close();
   });
   it("Статус и наличие полей -> статус 200, поля корректны", async () => {
-    let response = await baseAPI.sendRequest(getUrlApi(PATH.RATE));
+ 
     expect(response.status).to.equal(200);
     expect(response.body).to.have.property("resources");
     expect(response.body.resources).to.have.property("graphql");
@@ -43,8 +45,6 @@ describe("Получения информации по rate", function () {
     });
   });
   it("Тип данных в значених -> строка и числа", async () => {
-    let response = await baseAPI.sendRequest(getUrlApi(PATH.RATE));
-
     rateResponse.numberFields.forEach((field) => {
       expect(response.body.resources.core[field]).to.be.a("number");
     });
