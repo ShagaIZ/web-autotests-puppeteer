@@ -1,4 +1,5 @@
-export const userResponse = {
+export const validUserResponse = {
+
   requiredFields: [
     "login",
     "id",
@@ -75,6 +76,10 @@ export const userResponse = {
     "location",
   ],
 };
+
+export const notFoundUserResponse = {
+  fields: ["message", "documentation_url", "status"]
+}
 
 
 export const rateResponse = {
