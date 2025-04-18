@@ -10,6 +10,8 @@ export class MainPage {
     this.summaryBlock = '[class="sc-bcXHqe cSGkzu section-center"]'
     this.avatar = '[src="https://avatars.githubusercontent.com/u/97968096?v=4"]'
     this.itemSummary = '[class="item"]'
+    this.followButtonFindUser = '[href="https://github.com/ShagaIZ"]'
+    this.linkButtonFriend = '[href="https://github.com/volkhe"]'
     
   }
   async getElement(element) {
@@ -27,5 +29,8 @@ export class MainPage {
   async getSummaryItemText(nth){
    let items = await this.page.$$(this.itemSummary);
    return await this.page.evaluate(el => el.innerText, items[nth]);
+  }
+  async clickLinkButton(element){
+    await this.page.locator(element).click()
   }
 }
