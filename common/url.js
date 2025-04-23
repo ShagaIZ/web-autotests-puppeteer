@@ -4,7 +4,7 @@ export const PATH = {
     RATE: 'rate_limit',
     USERS: 'users/'
 }
-export function getUrlApi(path, user=''){
-    return BASE_URL_API + path + user
+export function getUrlApi(path, user='', query=''){
+    return BASE_URL_API + path + user + query
 }
 
